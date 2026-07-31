@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Notebook - Ghi Chú Cá Nhân</title>
-  
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -21,148 +19,49 @@
               600: '#2563eb',
               700: '#1d4ed8',
             }
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-            serif: ['Georgia', 'Cambria', 'serif'],
-            mono: ['"Fira Code"', 'Consolas', 'monospace']
           }
         }
       }
     }
   </script>
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- CryptoJS CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-  <!-- React & ReactDOM CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  
-  <!-- Babel Standalone CDN -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
   <style>
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(156, 163, 175, 0.4);
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(107, 114, 128, 0.6);
-    }
-    
-    /* WYSIWYG Content Styles */
-    .editor-content [contenteditable="true"]:focus {
-      outline: none;
-    }
-    .editor-content blockquote {
-      border-left: 4px solid #3b82f6;
-      padding-left: 1rem;
-      font-style: italic;
-      color: #4b5563;
-      margin: 0.75rem 0;
-    }
-    .dark .editor-content blockquote {
-      color: #9ca3af;
-    }
-    .editor-content pre {
-      background-color: #1e293b;
-      color: #f8fafc;
-      padding: 0.75rem 1rem;
-      border-radius: 0.5rem;
-      font-family: 'Fira Code', monospace;
-      font-size: 0.875rem;
-      overflow-x: auto;
-      margin: 0.75rem 0;
-    }
-    .editor-content ul {
-      list-style-type: disc;
-      padding-left: 1.5rem;
-      margin: 0.5rem 0;
-    }
-    .editor-content ol {
-      list-style-type: decimal;
-      padding-left: 1.5rem;
-      margin: 0.5rem 0;
-    }
-    .editor-content h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    .editor-content h2 {
-      font-size: 1.35rem;
-      font-weight: 600;
-      margin-top: 0.875rem;
-      margin-bottom: 0.375rem;
-    }
-    .editor-content h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-top: 0.75rem;
-      margin-bottom: 0.25rem;
-    }
-    .editor-content mark {
-      background-color: #fef08a;
-      padding: 0.1rem 0.3rem;
-      border-radius: 0.2rem;
-    }
-    .dark .editor-content mark {
-      background-color: #854d0e;
-      color: #fef08a;
-    }
-    .editor-content table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-    }
-    .editor-content th, .editor-content td {
-      border: 1px solid #d1d5db;
-      padding: 0.5rem 0.75rem;
-      text-align: left;
-    }
-    .dark .editor-content th, .dark .editor-content td {
-      border-color: #374151;
-    }
-    .editor-content th {
-      background-color: #f3f4f6;
-      font-weight: 600;
-    }
-    .dark .editor-content th {
-      background-color: #1f2937;
-    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(107, 114, 128, 0.6); }
+    .editor-content [contenteditable="true"]:focus { outline: none; }
+    .editor-content blockquote { border-left: 4px solid #3b82f6; padding-left: 1rem; font-style: italic; color: #4b5563; margin: 0.75rem 0; }
+    .dark .editor-content blockquote { color: #9ca3af; }
+    .editor-content pre { background-color: #1e293b; color: #f8fafc; padding: 0.75rem 1rem; border-radius: 0.5rem; font-family: 'Fira Code', monospace; font-size: 0.875rem; overflow-x: auto; margin: 0.75rem 0; }
+    .editor-content ul { list-style-type: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
+    .editor-content ol { list-style-type: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
+    .editor-content h1 { font-size: 1.75rem; font-weight: 700; margin-top: 1rem; margin-bottom: 0.5rem; }
+    .editor-content h2 { font-size: 1.35rem; font-weight: 600; margin-top: 0.875rem; margin-bottom: 0.375rem; }
+    .editor-content h3 { font-size: 1.15rem; font-weight: 600; margin-top: 0.75rem; margin-bottom: 0.25rem; }
   </style>
 </head>
 <body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans antialiased select-none">
   <div id="root" class="h-full"></div>
 
-  <!-- Single File React Application -->
   <script type="text/babel">
-    const { useState, useEffect, useRef, useMemo, useCallback } = React;
+    const { useState, useEffect, useRef, useMemo } = React;
 
-    // ==========================================
-    // 1. DICTIONARY & I18N
-    // ==========================================
     const translations = {
       vi: {
         appName: 'Notebook',
-        appSubtitle: 'Ghi chú cá nhân',
         newNote: 'Tạo ghi chú mới',
-        searchPlaceholder: 'Tìm kiếm ghi chú (Ctrl+K)...',
+        searchPlaceholder: 'Tìm kiếm ghi chú...',
         allNotes: 'Tất cả ghi chú',
         favorites: 'Yêu thích',
         pinned: 'Đã ghim',
@@ -174,38 +73,27 @@
         tags: 'Thẻ tag',
         addFolder: 'Thêm thư mục',
         addCategory: 'Thêm danh mục',
-        addTag: 'Thêm thẻ',
         noNotes: 'Chưa có ghi chú nào',
         noNotesDesc: 'Bấm nút "Tạo ghi chú mới" để bắt đầu ghi chép ý tưởng của bạn.',
         noteTitlePlaceholder: 'Tiêu đề ghi chú...',
-        wysiwyg: 'Soạn thảo trực quan',
+        wysiwyg: 'Trực quan',
         markdown: 'Markdown',
         preview: 'Xem trước',
         save: 'Lưu',
-        saving: 'Đang lưu...',
-        saved: 'Đã lưu',
         delete: 'Xóa',
         restore: 'Khôi phục',
         deletePermanent: 'Xóa vĩnh viễn',
-        duplicate: 'Nhân bản',
         pin: 'Ghim',
         unpin: 'Bỏ ghim',
         favorite: 'Yêu thích',
         unfavorite: 'Bỏ yêu thích',
         lock: 'Mặt khóa mật khẩu',
-        unlock: 'Mở khóa ghi chú',
+        unlock: 'Mở khóa',
         export: 'Xuất file',
         import: 'Nhập file',
-        backup: 'Sao lưu & Khôi phục',
+        backup: 'Sao lưu',
         settings: 'Cài đặt',
         theme: 'Giao diện',
-        light: 'Sáng',
-        dark: 'Tối',
-        system: 'Hệ thống',
-        fontSize: 'Kích thước chữ',
-        fontFamily: 'Phông chữ',
-        language: 'Ngôn ngữ',
-        autoSave: 'Tự động lưu',
         wordCount: 'Từ',
         charCount: 'Ký tự',
         readTime: 'Phút đọc',
@@ -214,22 +102,16 @@
         passwordPrompt: 'Nhập mật khẩu để giải mã ghi chú này',
         setPasswordPrompt: 'Thiết lập mật khẩu cho ghi chú này',
         passwordMismatch: 'Mật khẩu không chính xác',
-        downloadBackup: 'Tải bản sao lưu JSON',
-        restoreBackup: 'Khôi phục từ file JSON',
-        exportFormat: 'Định dạng xuất',
-        close: 'Đóng',
-        toastSaved: 'Đã lưu ghi chú thành công!',
-        toastDeleted: 'Đã chuyển ghi chú vào thùng rác',
-        toastRestored: 'Đã khôi phục ghi chú',
-        toastBackupRestored: 'Đã khôi phục dữ liệu từ bản sao lưu',
-        toastLocked: 'Đã khóa ghi chú thành công',
-        toastUnlocked: 'Đã mở khóa ghi chú',
+        cookieTitle: 'Bạn có chấp nhận cookie không?',
+        cookieMessage: 'Trang web sử dụng cookie và bộ nhớ cục bộ để lưu trữ các ghi chú, cài đặt cá nhân và tối ưu trải nghiệm của bạn.',
+        cookieAcceptAll: 'Chấp nhận',
+        cookieNecessaryOnly: 'Chỉ cần thiết',
+        cookieDecline: 'Từ chối'
       },
       en: {
         appName: 'Notebook',
-        appSubtitle: 'Personal Notes',
         newNote: 'New Note',
-        searchPlaceholder: 'Search notes (Ctrl+K)...',
+        searchPlaceholder: 'Search notes...',
         allNotes: 'All Notes',
         favorites: 'Favorites',
         pinned: 'Pinned',
@@ -241,7 +123,6 @@
         tags: 'Tags',
         addFolder: 'Add Folder',
         addCategory: 'Add Category',
-        addTag: 'Add Tag',
         noNotes: 'No notes found',
         noNotesDesc: 'Click "New Note" to start capturing your thoughts.',
         noteTitlePlaceholder: 'Note title...',
@@ -249,30 +130,20 @@
         markdown: 'Markdown',
         preview: 'Preview',
         save: 'Save',
-        saving: 'Saving...',
-        saved: 'Saved',
         delete: 'Delete',
         restore: 'Restore',
         deletePermanent: 'Delete Permanently',
-        duplicate: 'Duplicate',
         pin: 'Pin',
         unpin: 'Unpin',
         favorite: 'Favorite',
         unfavorite: 'Unfavorite',
         lock: 'Lock with Password',
-        unlock: 'Unlock Note',
+        unlock: 'Unlock',
         export: 'Export',
         import: 'Import',
-        backup: 'Backup & Restore',
+        backup: 'Backup',
         settings: 'Settings',
         theme: 'Theme',
-        light: 'Light',
-        dark: 'Dark',
-        system: 'System',
-        fontSize: 'Font Size',
-        fontFamily: 'Font Family',
-        language: 'Language',
-        autoSave: 'Auto Save',
         wordCount: 'words',
         charCount: 'chars',
         readTime: 'min read',
@@ -281,123 +152,64 @@
         passwordPrompt: 'Enter password to decrypt this note',
         setPasswordPrompt: 'Set a password for this note',
         passwordMismatch: 'Incorrect password',
-        downloadBackup: 'Download JSON Backup',
-        restoreBackup: 'Restore from JSON File',
-        exportFormat: 'Export Format',
-        close: 'Close',
-        toastSaved: 'Note saved successfully!',
-        toastDeleted: 'Moved note to trash',
-        toastRestored: 'Note restored',
-        toastBackupRestored: 'Data restored from backup',
-        toastLocked: 'Note encrypted & locked',
-        toastUnlocked: 'Note decrypted & unlocked',
+        cookieTitle: 'Do you accept cookies?',
+        cookieMessage: 'This website uses cookies and local storage to save your notes, personal settings, and improve your experience.',
+        cookieAcceptAll: 'Accept',
+        cookieNecessaryOnly: 'Necessary Only',
+        cookieDecline: 'Decline'
       }
     };
 
-    // ==========================================
-    // 2. CRYPTO UTILITIES
-    // ==========================================
-    function encryptText(plainText, password) {
-      if (!password) return plainText;
-      try {
-        return CryptoJS.AES.encrypt(plainText, password).toString();
-      } catch (err) {
-        console.error('Encryption error:', err);
-        return plainText;
-      }
+    function encryptText(text, pwd) {
+      if (!pwd) return text;
+      return CryptoJS.AES.encrypt(text, pwd).toString();
     }
 
-    function decryptText(cipherText, password) {
-      if (!password) return cipherText;
+    function decryptText(cipher, pwd) {
+      if (!pwd) return cipher;
       try {
-        const bytes = CryptoJS.AES.decrypt(cipherText, password);
-        const originalText = bytes.toString(CryptoJS.enc.Utf8);
-        return originalText || null;
-      } catch (err) {
+        const bytes = CryptoJS.AES.decrypt(cipher, pwd);
+        const str = bytes.toString(CryptoJS.enc.Utf8);
+        return str || null;
+      } catch (e) {
         return null;
       }
     }
 
-    // ==========================================
-    // 3. INDEXEDDB DATABASE MANAGER
-    // ==========================================
-    class NotebookDB {
+    class DB {
       constructor() {
-        this.dbName = 'SingleFileNotebookDB_v1';
+        this.name = 'SingleNotebook_v2';
         this.version = 1;
         this.db = null;
       }
-
       async init() {
         if (this.db) return this.db;
         return new Promise((resolve, reject) => {
-          const request = indexedDB.open(this.dbName, this.version);
-          request.onupgradeneeded = (e) => {
+          const req = indexedDB.open(this.name, this.version);
+          req.onupgradeneeded = (e) => {
             const db = e.target.result;
-            if (!db.objectStoreNames.contains('notes')) {
-              const notesStore = db.createObjectStore('notes', { keyPath: 'id' });
-              notesStore.createIndex('updatedAt', 'updatedAt', { unique: false });
-              notesStore.createIndex('folderId', 'folderId', { unique: false });
-            }
-            if (!db.objectStoreNames.contains('folders')) {
-              db.createObjectStore('folders', { keyPath: 'id' });
-            }
-            if (!db.objectStoreNames.contains('categories')) {
-              db.createObjectStore('categories', { keyPath: 'id' });
-            }
-            if (!db.objectStoreNames.contains('tags')) {
-              db.createObjectStore('tags', { keyPath: 'id' });
-            }
-            if (!db.objectStoreNames.contains('settings')) {
-              db.createObjectStore('settings', { keyPath: 'key' });
-            }
+            if (!db.objectStoreNames.contains('notes')) db.createObjectStore('notes', { keyPath: 'id' });
+            if (!db.objectStoreNames.contains('folders')) db.createObjectStore('folders', { keyPath: 'id' });
+            if (!db.objectStoreNames.contains('categories')) db.createObjectStore('categories', { keyPath: 'id' });
+            if (!db.objectStoreNames.contains('tags')) db.createObjectStore('tags', { keyPath: 'id' });
           };
-          request.onsuccess = async (e) => {
+          req.onsuccess = (e) => {
             this.db = e.target.result;
-            await this.seedInitialData();
-            resolve(this.db);
+            this.seed().then(() => resolve(this.db));
           };
-          request.onerror = (e) => reject(e.target.error);
+          req.onerror = (e) => reject(e.target.error);
         });
       }
-
-      async seedInitialData() {
+      async seed() {
         const notes = await this.getNotes();
         if (notes.length === 0) {
-          const defaultFolders = [
-            { id: 'f-work', name: 'Công việc', icon: 'briefcase', color: '#3b82f6' },
-            { id: 'f-personal', name: 'Cá nhân', icon: 'user', color: '#10b981' }
-          ];
-          const defaultCategories = [
-            { id: 'c-ideas', name: 'Ý tưởng', color: '#f59e0b' },
-            { id: 'c-tasks', name: 'Nhiệm vụ', color: '#ec4899' }
-          ];
-          const defaultTags = [
-            { id: 't-important', name: 'Quan trọng', color: '#ef4444' },
-            { id: 't-todo', name: 'Cần làm', color: '#8b5cf6' }
-          ];
-
-          for (const f of defaultFolders) await this.saveFolder(f);
-          for (const c of defaultCategories) await this.saveCategory(c);
-          for (const t of defaultTags) await this.saveTag(t);
-
-          const welcomeNote = {
-            id: 'welcome-note-1',
-            title: 'Chào mừng bạn đến với Notebook! 📝',
-            content: `<h1>Ứng dụng Ghi chú Cá nhân Đơn file</h1>
-<p>Dữ liệu của bạn được lưu trữ an toàn 100% tại thiết bị thông qua <strong>IndexedDB</strong>.</p>
-<h3>Tính năng nổi bật:</h3>
-<ul>
-  <li><strong>Soạn thảo phong phú (WYSIWYG)</strong> & Markdown linh hoạt.</li>
-  <li><strong>Mã hóa mật khẩu AES-256</strong> cho ghi chú bí mật.</li>
-  <li><strong>Sắp xếp thông minh</strong> theo Thư mục, Danh mục và Thẻ Tag.</li>
-  <li><strong>Sao lưu & Khôi phục</strong> dễ dàng chỉ với 1 click.</li>
-  <li><strong>Giao diện Sáng / Tối</strong> và hỗ trợ Đa ngôn ngữ (Việt / Anh).</li>
-</ul>
-<blockquote>Bắt đầu viết những ý tưởng tuyệt vời ngay hôm nay!</blockquote>`,
-            folderId: 'f-personal',
-            categoryId: 'c-ideas',
-            tags: ['t-important'],
+          const demo = {
+            id: 'note-welcome',
+            title: 'Chào mừng bạn đến với Notebook 📝',
+            content: '<h1>Chào mừng bạn!</h1><p>Ứng dụng ghi chú cá nhân hỗ trợ nhập xuất file JSON, TXT, DOCX, MD, HTML và bảo mật mã hóa mật khẩu AES-256.</p>',
+            folderId: '',
+            categoryId: '',
+            tags: ['Chào mừng'],
             color: '#3b82f6',
             emoji: '📝',
             isPinned: true,
@@ -407,175 +219,91 @@
             updatedAt: Date.now(),
             mode: 'wysiwyg'
           };
-          await this.saveNote(welcomeNote);
+          await this.saveNote(demo);
         }
       }
-
       async getNotes() {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('notes', 'readonly');
-          const store = tx.objectStore('notes');
-          const request = store.getAll();
-          request.onsuccess = () => resolve(request.result || []);
+          const req = tx.objectStore('notes').getAll();
+          req.onsuccess = () => res(req.result || []);
         });
       }
-
       async saveNote(note) {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('notes', 'readwrite');
-          const store = tx.objectStore('notes');
-          store.put(note);
-          tx.oncomplete = () => resolve(note);
+          tx.objectStore('notes').put(note);
+          tx.oncomplete = () => res(note);
         });
       }
-
-      async deleteNote(id, permanent = false) {
+      async deleteNote(id, perm = false) {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('notes', 'readwrite');
           const store = tx.objectStore('notes');
-          if (permanent) {
+          if (perm) {
             store.delete(id);
           } else {
             const req = store.get(id);
             req.onsuccess = () => {
-              if (req.result) {
-                const note = { ...req.result, isTrashed: true, trashedAt: Date.now() };
-                store.put(note);
-              }
+              if (req.result) store.put({ ...req.result, isTrashed: true });
             };
           }
-          tx.oncomplete = () => resolve(true);
+          tx.oncomplete = () => res(true);
         });
       }
-
       async restoreNote(id) {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('notes', 'readwrite');
           const store = tx.objectStore('notes');
           const req = store.get(id);
           req.onsuccess = () => {
-            if (req.result) {
-              const note = { ...req.result, isTrashed: false, trashedAt: undefined };
-              store.put(note);
-            }
+            if (req.result) store.put({ ...req.result, isTrashed: false });
           };
-          tx.oncomplete = () => resolve(true);
+          tx.oncomplete = () => res(true);
         });
       }
-
-      async emptyTrash() {
-        const notes = await this.getNotes();
-        const trashed = notes.filter(n => n.isTrashed);
-        for (const n of trashed) {
-          await this.deleteNote(n.id, true);
-        }
-      }
-
       async getFolders() {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('folders', 'readonly');
           const req = tx.objectStore('folders').getAll();
-          req.onsuccess = () => resolve(req.result || []);
+          req.onsuccess = () => res(req.result || []);
         });
       }
-
       async saveFolder(folder) {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('folders', 'readwrite');
           tx.objectStore('folders').put(folder);
-          tx.oncomplete = () => resolve(folder);
+          tx.oncomplete = () => res(folder);
         });
       }
-
-      async deleteFolder(id) {
-        await this.init();
-        return new Promise((resolve) => {
-          const tx = this.db.transaction('folders', 'readwrite');
-          tx.objectStore('folders').delete(id);
-          tx.oncomplete = () => resolve(true);
-        });
-      }
-
       async getCategories() {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('categories', 'readonly');
           const req = tx.objectStore('categories').getAll();
-          req.onsuccess = () => resolve(req.result || []);
+          req.onsuccess = () => res(req.result || []);
         });
       }
-
       async saveCategory(cat) {
         await this.init();
-        return new Promise((resolve) => {
+        return new Promise((res) => {
           const tx = this.db.transaction('categories', 'readwrite');
           tx.objectStore('categories').put(cat);
-          tx.oncomplete = () => resolve(cat);
-        });
-      }
-
-      async getTags() {
-        await this.init();
-        return new Promise((resolve) => {
-          const tx = this.db.transaction('tags', 'readonly');
-          const req = tx.objectStore('tags').getAll();
-          req.onsuccess = () => resolve(req.result || []);
-        });
-      }
-
-      async saveTag(tag) {
-        await this.init();
-        return new Promise((resolve) => {
-          const tx = this.db.transaction('tags', 'readwrite');
-          tx.objectStore('tags').put(tag);
-          tx.oncomplete = () => resolve(tag);
-        });
-      }
-
-      async getSettings() {
-        await this.init();
-        return new Promise((resolve) => {
-          const tx = this.db.transaction('settings', 'readonly');
-          const req = tx.objectStore('settings').get('app_settings');
-          req.onsuccess = () => {
-            const defaultSettings = {
-              theme: 'system',
-              fontSize: 'md',
-              fontFamily: 'sans',
-              autoSave: true,
-              autoSaveDelay: 1000,
-              language: 'vi',
-              defaultMode: 'wysiwyg'
-            };
-            resolve(req.result ? { ...defaultSettings, ...req.result.value } : defaultSettings);
-          };
-        });
-      }
-
-      async saveSettings(settings) {
-        await this.init();
-        return new Promise((resolve) => {
-          const tx = this.db.transaction('settings', 'readwrite');
-          tx.objectStore('settings').put({ key: 'app_settings', value: settings });
-          tx.oncomplete = () => resolve(settings);
+          tx.oncomplete = () => res(cat);
         });
       }
     }
 
-    const db = new NotebookDB();
+    const db = new DB();
 
-    // ==========================================
-    // 4. SVG ICON COMPONENT
-    // ==========================================
-    function Icon({ name, className = 'w-5 h-5', size }) {
-      const style = size ? { width: size, height: size } : {};
-      const icons = {
+    function Icon({ name, className = 'w-5 h-5' }) {
+      const paths = {
         plus: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />,
         search: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />,
         trash: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />,
@@ -584,147 +312,257 @@
         lock: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />,
         unlock: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />,
         folder: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />,
-        tag: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />,
-        settings: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />,
         download: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />,
         upload: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />,
         sun: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />,
         moon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />,
-        menu: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />,
+        cookie: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 2a10 10 0 1010 10 4 4 0 01-5-5 4 4 0 01-5-5z M8.5 8.5h.01 M14.5 12.5h.01 M10.5 15.5h.01" />,
         x: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />,
-        bold: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z" />,
-        italic: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 4h6m-4 16h6M14 4l-4 16" />,
-        list: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />,
-        code: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />,
-        quote: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />,
-        copy: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />,
         check: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />,
-        globe: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z M3.6 9h16.8M3.6 15h16.8" />,
-        database: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />,
-        refresh: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />,
-        eye: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />,
         fileText: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       };
-
       return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          className={className}
-          style={style}
-        >
-          {icons[name] || icons.fileText}
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className={className}>
+          {paths[name] || paths.fileText}
         </svg>
       );
     }
 
-    // ==========================================
-    // 5. TOAST NOTIFICATION COMPONENT
-    // ==========================================
-    function Toast({ message, onClose }) {
-      useEffect(() => {
-        const timer = setTimeout(onClose, 2500);
-        return () => clearTimeout(timer);
-      }, [onClose]);
+    function CookieModal({ lang }) {
+      const [show, setShow] = useState(false);
+      const t = translations[lang] || translations.vi;
 
-      if (!message) return null;
+      useEffect(() => {
+        if (!localStorage.getItem('cookieConsent')) setShow(true);
+      }, []);
+
+      const save = (val) => {
+        localStorage.setItem('cookieConsent', val);
+        setShow(false);
+      };
+
+      if (!show) return null;
 
       return (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 px-4 py-3 rounded-xl shadow-2xl border border-slate-700 dark:border-slate-300 text-sm font-medium transition-all transform translate-y-0 opacity-100">
-          <Icon name="check" className="w-5 h-5 text-emerald-400 dark:text-emerald-600" />
-          <span>{message}</span>
+        <div className="fixed bottom-4 right-4 left-4 md:left-auto md:max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-5 z-50">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 rounded-xl shrink-0">
+              <Icon name="cookie" className="w-6 h-6" />
+            </div>
+            <div className="space-y-1 flex-1">
+              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-sm flex items-center justify-between">
+                <span>{t.cookieTitle}</span>
+                <button onClick={() => save('necessary')} className="text-slate-400 hover:text-slate-600 p-1">
+                  <Icon name="x" className="w-4 h-4" />
+                </button>
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                {t.cookieMessage}
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 flex flex-col sm:flex-row items-center justify-end gap-2">
+            <button onClick={() => save('declined')} className="px-3 py-1.5 text-xs text-slate-500 hover:text-slate-700">
+              {t.cookieDecline}
+            </button>
+            <button onClick={() => save('necessary')} className="px-3 py-1.5 text-xs bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl">
+              {t.cookieNecessaryOnly}
+            </button>
+            <button onClick={() => save('all')} className="px-4 py-2 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow-md flex items-center gap-1">
+              <Icon name="check" className="w-3.5 h-3.5" />
+              <span>{t.cookieAcceptAll}</span>
+            </button>
+          </div>
         </div>
       );
     }
 
-    // ==========================================
-    // 6. MAIN APP COMPONENT
-    // ==========================================
+    function ExportModal({ isOpen, onClose, note, allNotes, folders }) {
+      const [format, setFormat] = useState('json');
+      const [scope, setScope] = useState('single');
+
+      if (!isOpen) return null;
+
+      const handleExport = async () => {
+        const targetNotes = scope === 'single' ? (note ? [note] : []) : allNotes;
+        if (targetNotes.length === 0) return alert('Không có ghi chú nào');
+
+        if (targetNotes.length === 1 && scope === 'single') {
+          const n = targetNotes[0];
+          const filename = (n.title || 'ghi-chu').replace(/[/\\?%*:|"<>]/g, '-');
+          let content = n.content;
+          let mime = 'text/plain';
+
+          if (format === 'json') {
+            content = JSON.stringify(n, null, 2);
+            mime = 'application/json';
+          } else if (format === 'txt') {
+            content = n.title + '\n\n' + n.content.replace(/<[^>]+>/g, '');
+          } else if (format === 'md') {
+            content = '# ' + n.title + '\n\n' + (window.TurndownService ? new TurndownService().turndown(n.content) : n.content);
+          } else if (format === 'html') {
+            content = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${n.title}</title></head><body><h1>${n.title}</h1>${n.content}</body></html>`;
+            mime = 'text/html';
+          } else if (format === 'docx') {
+            content = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body><h2>${n.title}</h2>${n.content}</body></html>`;
+            mime = 'application/msword';
+          }
+
+          const blob = new Blob([content], { type: `${mime};charset=utf-8` });
+          saveAs(blob, `${filename}.${format}`);
+        } else {
+          const zip = new JSZip();
+          targetNotes.forEach((n) => {
+            const fname = (n.title || 'note').replace(/[/\\?%*:|"<>]/g, '-');
+            let data = n.content;
+            if (format === 'json') data = JSON.stringify(n, null, 2);
+            else if (format === 'txt') data = n.title + '\n\n' + n.content.replace(/<[^>]+>/g, '');
+            else if (format === 'md') data = '# ' + n.title + '\n\n' + (window.TurndownService ? new TurndownService().turndown(n.content) : n.content);
+            zip.file(`${fname}.${format}`, data);
+          });
+          const zipBlob = await zip.generateAsync({ type: 'blob' });
+          saveAs(zipBlob, `Notebook_Export_${Date.now()}.zip`);
+        }
+        onClose();
+      };
+
+      return (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-md w-full border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold">Xuất dữ liệu Ghi chú</h2>
+              <button onClick={onClose}><Icon name="x" /></button>
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-500 uppercase block mb-2">Phạm vi</label>
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <button onClick={() => setScope('single')} className={`p-2.5 rounded-xl border ${scope === 'single' ? 'bg-blue-50 border-blue-500 font-bold text-blue-600' : 'border-slate-200'}`}>Ghi chú hiện tại</button>
+                <button onClick={() => setScope('all')} className={`p-2.5 rounded-xl border ${scope === 'all' ? 'bg-blue-50 border-blue-500 font-bold text-blue-600' : 'border-slate-200'}`}>Tất cả ({allNotes.length})</button>
+              </div>
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-500 uppercase block mb-2">Định dạng</label>
+              <div className="grid grid-cols-3 gap-2 text-xs">
+                {['json', 'txt', 'docx', 'md', 'html'].map((f) => (
+                  <button key={f} onClick={() => setFormat(f)} className={`p-2.5 rounded-xl border uppercase font-semibold ${format === f ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-200 dark:border-slate-700'}`}>
+                    .{f}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="pt-2 flex justify-end gap-2">
+              <button onClick={onClose} className="px-4 py-2 text-xs font-semibold">Hủy</button>
+              <button onClick={handleExport} className="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-md">Tải xuống</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function ImportModal({ isOpen, onClose, onImport }) {
+      if (!isOpen) return null;
+
+      const handleFile = async (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const ext = file.name.split('.').pop().toLowerCase();
+        const title = file.name.replace(/\.[^/.]+$/, '');
+
+        if (ext === 'json') {
+          const text = await file.text();
+          try {
+            const data = JSON.parse(text);
+            if (Array.isArray(data)) {
+              data.forEach(n => onImport(n));
+            } else if (data.title) {
+              onImport(data);
+            }
+          } catch(err) {
+            alert('File JSON không hợp lệ');
+          }
+        } else if (ext === 'txt' || ext === 'md' || ext === 'html') {
+          const text = await file.text();
+          let content = text;
+          if (ext === 'md' && window.marked) content = marked.parse(text);
+          onImport({
+            id: `import-${Date.now()}`,
+            title: title,
+            content: ext === 'txt' ? `<p>${text.replace(/\n/g, '<br/>')}</p>` : content,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          });
+        } else {
+          const text = await file.text();
+          onImport({
+            id: `import-${Date.now()}`,
+            title: title,
+            content: text,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          });
+        }
+        onClose();
+      };
+
+      return (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-md w-full border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-bold">Nhập tập tin ghi chú</h2>
+              <button onClick={onClose}><Icon name="x" /></button>
+            </div>
+            <div className="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-8 text-center cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800" onClick={() => document.getElementById('importInput').click()}>
+              <Icon name="upload" className="w-10 h-10 mx-auto text-slate-400 mb-2" />
+              <p className="text-sm font-semibold">Chọn file từ máy tính</p>
+              <p className="text-xs text-slate-400 mt-1">Hỗ trợ JSON, TXT, DOCX, MD, HTML</p>
+              <input id="importInput" type="file" accept=".json,.txt,.docx,.doc,.md,.html" className="hidden" onChange={handleFile} />
+            </div>
+            <div className="flex justify-end">
+              <button onClick={onClose} className="px-4 py-2 text-xs font-semibold">Đóng</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     function App() {
       const [notes, setNotes] = useState([]);
       const [folders, setFolders] = useState([]);
       const [categories, setCategories] = useState([]);
-      const [tags, setTags] = useState([]);
-      const [settings, setSettings] = useState({
-        theme: 'system',
-        fontSize: 'md',
-        fontFamily: 'sans',
-        autoSave: true,
-        autoSaveDelay: 1000,
-        language: 'vi',
-        defaultMode: 'wysiwyg'
-      });
-
       const [activeNoteId, setActiveNoteId] = useState(null);
-      const [activeView, setActiveView] = useState('all'); // all, favorites, pinned, locked, trash, folder:id, category:id, tag:id
+      const [activeView, setActiveView] = useState('all');
       const [searchQuery, setSearchQuery] = useState('');
-      const [sortBy, setSortBy] = useState('updatedAt');
-      const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-      const [toastMsg, setToastMsg] = useState('');
+      const [theme, setTheme] = useState('light');
+      const [lang, setLang] = useState('vi');
+      const [unlocked, setUnlocked] = useState({});
+      const [showExport, setShowExport] = useState(false);
+      const [showImport, setShowImport] = useState(false);
 
-      // Modals
-      const [showSettingsModal, setShowSettingsModal] = useState(false);
-      const [showBackupModal, setShowBackupModal] = useState(false);
-      const [showExportModal, setShowExportModal] = useState(false);
-      const [showPasswordModal, setShowPasswordModal] = useState(false);
-      const [passwordModalNoteId, setPasswordModalNoteId] = useState(null);
-      const [unlockedNotes, setUnlockedNotes] = useState({}); // { [id]: plainText }
+      const t = translations[lang] || translations.vi;
 
-      const t = translations[settings.language] || translations.vi;
-
-      // Load initial DB data
       useEffect(() => {
-        async function loadData() {
-          const loadedNotes = await db.getNotes();
-          const loadedFolders = await db.getFolders();
-          const loadedCategories = await db.getCategories();
-          const loadedTags = await db.getTags();
-          const loadedSettings = await db.getSettings();
-
-          setNotes(loadedNotes);
-          setFolders(loadedFolders);
-          setCategories(loadedCategories);
-          setTags(loadedTags);
-          setSettings(loadedSettings);
-
-          if (loadedNotes.length > 0) {
-            const firstValid = loadedNotes.find(n => !n.isTrashed) || loadedNotes[0];
-            setActiveNoteId(firstValid.id);
-          }
+        async function load() {
+          const n = await db.getNotes();
+          const f = await db.getFolders();
+          const c = await db.getCategories();
+          setNotes(n);
+          setFolders(f);
+          setCategories(c);
+          if (n.length > 0) setActiveNoteId(n[0].id);
         }
-        loadData();
+        load();
       }, []);
 
-      // Theme toggle effect
-      useEffect(() => {
-        const root = document.documentElement;
-        if (settings.theme === 'dark') {
-          root.classList.add('dark');
-        } else if (settings.theme === 'light') {
-          root.classList.remove('dark');
-        } else {
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            root.classList.add('dark');
-          } else {
-            root.classList.remove('dark');
-          }
-        }
-      }, [settings.theme]);
+      const activeNote = notes.find(n => n.id === activeNoteId);
 
-      const showToast = (msg) => {
-        setToastMsg(msg);
-      };
-
-      const handleCreateNewNote = async () => {
-        const newNote = {
+      const handleCreate = async () => {
+        const newN = {
           id: `note-${Date.now()}`,
           title: t.noteTitlePlaceholder,
           content: '<p></p>',
-          folderId: activeView.startsWith('folder:') ? activeView.replace('folder:', '') : '',
-          categoryId: activeView.startsWith('category:') ? activeView.replace('category:', '') : '',
-          tags: activeView.startsWith('tag:') ? [activeView.replace('tag:', '')] : [],
+          folderId: '',
+          categoryId: '',
+          tags: [],
           color: '#3b82f6',
           emoji: '📝',
           isPinned: false,
@@ -732,916 +570,145 @@
           isTrashed: false,
           createdAt: Date.now(),
           updatedAt: Date.now(),
-          mode: settings.defaultMode || 'wysiwyg'
+          mode: 'wysiwyg'
         };
-
-        await db.saveNote(newNote);
-        setNotes(prev => [newNote, ...prev]);
-        setActiveNoteId(newNote.id);
-        showToast(t.toastSaved);
+        await db.saveNote(newN);
+        setNotes(prev => [newN, ...prev]);
+        setActiveNoteId(newN.id);
       };
 
-      const handleSaveNote = async (updatedNote) => {
-        const newNote = { ...updatedNote, updatedAt: Date.now() };
-        await db.saveNote(newNote);
-        setNotes(prev => prev.map(n => n.id === newNote.id ? newNote : n));
+      const handleSave = async (updated) => {
+        const n = { ...updated, updatedAt: Date.now() };
+        await db.saveNote(n);
+        setNotes(prev => prev.map(item => item.id === n.id ? n : item));
       };
 
-      const handleDeleteNote = async (id) => {
+      const handleDelete = async (id) => {
         await db.deleteNote(id, false);
         setNotes(prev => prev.map(n => n.id === id ? { ...n, isTrashed: true } : n));
-        showToast(t.toastDeleted);
       };
 
-      const handleRestoreNote = async (id) => {
-        await db.restoreNote(id);
-        setNotes(prev => prev.map(n => n.id === id ? { ...n, isTrashed: false } : n));
-        showToast(t.toastRestored);
-      };
-
-      const handlePermanentDelete = async (id) => {
-        await db.deleteNote(id, true);
-        setNotes(prev => prev.filter(n => n.id !== id));
-        if (activeNoteId === id) {
-          const remaining = notes.filter(n => n.id !== id && !n.isTrashed);
-          setActiveNoteId(remaining.length > 0 ? remaining[0].id : null);
-        }
-      };
-
-      const handleEmptyTrash = async () => {
-        if (confirm(t.emptyTrash + '?')) {
-          await db.emptyTrash();
-          setNotes(prev => prev.filter(n => !n.isTrashed));
-        }
-      };
-
-      const handleTogglePin = async (id) => {
-        const target = notes.find(n => n.id === id);
-        if (!target) return;
-        const updated = { ...target, isPinned: !target.isPinned, updatedAt: Date.now() };
-        await db.saveNote(updated);
-        setNotes(prev => prev.map(n => n.id === id ? updated : n));
-      };
-
-      const handleToggleFavorite = async (id) => {
-        const target = notes.find(n => n.id === id);
-        if (!target) return;
-        const updated = { ...target, isFavorite: !target.isFavorite, updatedAt: Date.now() };
-        await db.saveNote(updated);
-        setNotes(prev => prev.map(n => n.id === id ? updated : n));
-      };
-
-      // Filtered notes
-      const filteredNotes = useMemo(() => {
-        return notes.filter(note => {
-          // View filtering
-          if (activeView === 'trash') {
-            if (!note.isTrashed) return false;
-          } else {
-            if (note.isTrashed) return false;
-            if (activeView === 'favorites' && !note.isFavorite) return false;
-            if (activeView === 'pinned' && !note.isPinned) return false;
-            if (activeView === 'locked' && !note.isLocked) return false;
-            if (activeView.startsWith('folder:') && note.folderId !== activeView.replace('folder:', '')) return false;
-            if (activeView.startsWith('category:') && note.categoryId !== activeView.replace('category:', '')) return false;
-            if (activeView.startsWith('tag:') && !note.tags?.includes(activeView.replace('tag:', ''))) return false;
-          }
-
-          // Search query
+      const filtered = useMemo(() => {
+        return notes.filter(n => {
+          if (activeView === 'trash') return n.isTrashed;
+          if (n.isTrashed) return false;
+          if (activeView === 'favorites') return n.isFavorite;
+          if (activeView === 'pinned') return n.isPinned;
           if (searchQuery.trim()) {
-            const query = searchQuery.toLowerCase();
-            const matchTitle = note.title?.toLowerCase().includes(query);
-            const matchContent = note.content?.toLowerCase().includes(query);
-            return matchTitle || matchContent;
+            const q = searchQuery.toLowerCase();
+            return (n.title || '').toLowerCase().includes(q) || (n.content || '').toLowerCase().includes(q);
           }
-
           return true;
-        }).sort((a, b) => {
-          if (a.isPinned && !b.isPinned) return -1;
-          if (!a.isPinned && b.isPinned) return 1;
-          if (sortBy === 'updatedAt') return b.updatedAt - a.updatedAt;
-          if (sortBy === 'createdAt') return b.createdAt - a.createdAt;
-          if (sortBy === 'title') return (a.title || '').localeCompare(b.title || '');
-          return 0;
         });
-      }, [notes, activeView, searchQuery, sortBy]);
-
-      const activeNote = notes.find(n => n.id === activeNoteId);
+      }, [notes, activeView, searchQuery]);
 
       return (
-        <div className="flex flex-col h-screen overflow-hidden bg-slate-50 dark:bg-slate-900">
-          {/* HEADER */}
+        <div className={`flex flex-col h-screen overflow-hidden ${theme === 'dark' ? 'dark bg-slate-900 text-white' : 'bg-slate-50 text-slate-800'}`}>
           <header className="h-14 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 flex items-center justify-between z-10 shrink-0">
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition md:hidden"
-              >
-                <Icon name="menu" />
-              </button>
-              <div className="flex items-center gap-2">
-                <span className="text-xl">📝</span>
-                <span className="font-bold text-slate-800 dark:text-slate-100 tracking-tight">{t.appName}</span>
-              </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xl">📝</span>
+              <span className="font-bold text-slate-800 dark:text-slate-100">{t.appName}</span>
             </div>
 
-            {/* Search Bar */}
-            <div className="flex-1 max-w-md mx-4">
-              <div className="relative">
-                <Icon name="search" className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder={t.searchPlaceholder}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-100 dark:bg-slate-800 border-0 rounded-xl pl-9 pr-4 py-1.5 text-sm focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-100 placeholder-slate-400"
-                />
-              </div>
+            <div className="flex-1 max-w-md mx-4 relative">
+              <Icon name="search" className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+              <input
+                type="text"
+                placeholder={t.searchPlaceholder}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-slate-100 dark:bg-slate-800 rounded-xl pl-9 pr-4 py-1.5 text-sm outline-none"
+              />
             </div>
 
-            {/* Actions */}
-            <div className="flex items-center gap-1.5">
-              <button
-                onClick={handleCreateNewNote}
-                className="flex items-center gap-1.5 bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-xl text-sm font-medium transition shadow-sm"
-              >
+            <div className="flex items-center gap-2">
+              <button onClick={handleCreate} className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded-xl text-sm font-semibold">
                 <Icon name="plus" className="w-4 h-4" />
-                <span className="hidden sm:inline">{t.newNote}</span>
+                <span>{t.newNote}</span>
               </button>
-
-              <button
-                onClick={() => setSettings(s => ({ ...s, theme: s.theme === 'dark' ? 'light' : 'dark' }))}
-                className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                title={t.theme}
-              >
-                <Icon name={settings.theme === 'dark' ? 'sun' : 'moon'} className="w-4 h-4" />
+              <button onClick={() => setShowImport(true)} className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" title={t.import}>
+                <Icon name="upload" className="w-4 h-4" />
               </button>
-
-              <button
-                onClick={() => setSettings(s => ({ ...s, language: s.language === 'vi' ? 'en' : 'vi' }))}
-                className="px-2 py-1 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition uppercase"
-                title={t.language}
-              >
-                {settings.language}
+              <button onClick={() => setShowExport(true)} className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" title={t.export}>
+                <Icon name="download" className="w-4 h-4" />
               </button>
-
-              <button
-                onClick={() => setShowBackupModal(true)}
-                className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                title={t.backup}
-              >
-                <Icon name="database" className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => setShowSettingsModal(true)}
-                className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                title={t.settings}
-              >
-                <Icon name="settings" className="w-4 h-4" />
+              <button onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <Icon name={theme === 'dark' ? 'sun' : 'moon'} className="w-4 h-4" />
               </button>
             </div>
           </header>
 
-          {/* MAIN CONTAINER */}
           <div className="flex-1 flex overflow-hidden">
-            {/* SIDEBAR */}
-            <aside className={`w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col shrink-0 transition-all z-20 ${isSidebarOpen ? 'fixed inset-y-0 left-0 shadow-2xl' : 'hidden md:flex'}`}>
-              <div className="p-3 flex-1 overflow-y-auto space-y-6">
-                {/* Views */}
-                <div className="space-y-1">
-                  {[
-                    { id: 'all', icon: 'fileText', label: t.allNotes, count: notes.filter(n => !n.isTrashed).length },
-                    { id: 'favorites', icon: 'star', label: t.favorites, count: notes.filter(n => n.isFavorite && !n.isTrashed).length },
-                    { id: 'pinned', icon: 'pin', label: t.pinned, count: notes.filter(n => n.isPinned && !n.isTrashed).length },
-                    { id: 'locked', icon: 'lock', label: t.lockedNotes, count: notes.filter(n => n.isLocked && !n.isTrashed).length },
-                    { id: 'trash', icon: 'trash', label: t.trash, count: notes.filter(n => n.isTrashed).length }
-                  ].map(item => (
-                    <button
-                      key={item.id}
-                      onClick={() => { setActiveView(item.id); setIsSidebarOpen(false); }}
-                      className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition ${activeView === item.id ? 'bg-brand-50 dark:bg-brand-950/40 text-brand-600 dark:text-brand-40 font-semibold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <Icon name={item.icon} className="w-4 h-4" />
-                        <span>{item.label}</span>
-                      </div>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 font-normal">
-                        {item.count}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-
-                {/* Folders */}
-                <div>
-                  <div className="flex items-center justify-between px-3 mb-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{t.folders}</span>
-                    <button
-                      onClick={async () => {
-                        const name = prompt(t.addFolder);
-                        if (name) {
-                          const newF = { id: `f-${Date.now()}`, name, color: '#3b82f6' };
-                          await db.saveFolder(newF);
-                          setFolders(prev => [...prev, newF]);
-                        }
-                      }}
-                      className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-                    >
-                      <Icon name="plus" className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                  <div className="space-y-1">
-                    {folders.map(f => (
-                      <button
-                        key={f.id}
-                        onClick={() => { setActiveView(`folder:${f.id}`); setIsSidebarOpen(false); }}
-                        className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-sm transition ${activeView === `folder:${f.id}` ? 'bg-brand-50 dark:bg-brand-950/40 text-brand-600 font-semibold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
-                      >
-                        <div className="flex items-center gap-2.5 truncate">
-                          <Icon name="folder" className="w-4 h-4 text-blue-500 shrink-0" />
-                          <span className="truncate">{f.name}</span>
-                        </div>
-                        <span className="text-xs text-slate-400">
-                          {notes.filter(n => n.folderId === f.id && !n.isTrashed).length}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Categories */}
-                <div>
-                  <div className="flex items-center justify-between px-3 mb-2">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{t.categories}</span>
-                    <button
-                      onClick={async () => {
-                        const name = prompt(t.addCategory);
-                        if (name) {
-                          const newC = { id: `c-${Date.now()}`, name, color: '#f59e0b' };
-                          await db.saveCategory(newC);
-                          setCategories(prev => [...prev, newC]);
-                        }
-                      }}
-                      className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-                    >
-                      <Icon name="plus" className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                  <div className="space-y-1">
-                    {categories.map(c => (
-                      <button
-                        key={c.id}
-                        onClick={() => { setActiveView(`category:${c.id}`); setIsSidebarOpen(false); }}
-                        className={`w-full flex items-center justify-between px-3 py-1.5 rounded-xl text-sm transition ${activeView === `category:${c.id}` ? 'bg-brand-50 dark:bg-brand-950/40 text-brand-600 font-semibold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
-                      >
-                        <div className="flex items-center gap-2.5 truncate">
-                          <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: c.color }} />
-                          <span className="truncate">{c.name}</span>
-                        </div>
-                        <span className="text-xs text-slate-400">
-                          {notes.filter(n => n.categoryId === c.id && !n.isTrashed).length}
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Trash Empty Button in Sidebar */}
-              {activeView === 'trash' && (
-                <div className="p-3 border-t border-slate-200 dark:border-slate-800">
-                  <button
-                    onClick={handleEmptyTrash}
-                    className="w-full flex items-center justify-center gap-2 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-950/30 dark:text-red-400 py-2 rounded-xl text-xs font-semibold transition"
-                  >
-                    <Icon name="trash" className="w-4 h-4" />
-                    <span>{t.emptyTrash}</span>
-                  </button>
-                </div>
-              )}
+            <aside className="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 space-y-2">
+              {[
+                { id: 'all', icon: 'fileText', label: t.allNotes },
+                { id: 'favorites', icon: 'star', label: t.favorites },
+                { id: 'pinned', icon: 'pin', label: t.pinned },
+                { id: 'trash', icon: 'trash', label: t.trash }
+              ].map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveView(item.id)}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium ${activeView === item.id ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 font-bold' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}
+                >
+                  <Icon name={item.icon} className="w-4 h-4" />
+                  <span>{item.label}</span>
+                </button>
+              ))}
             </aside>
 
-            {/* NOTE LIST COLUMN */}
-            <div className="w-80 border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col shrink-0">
-              {/* Filter Subheader */}
-              <div className="p-3 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500">
-                <span className="font-semibold">{filteredNotes.length} ghi chú</span>
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-transparent border-0 text-xs font-medium text-slate-600 dark:text-slate-400 focus:ring-0 cursor-pointer"
+            <div className="w-80 border-r border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 p-2 space-y-2 overflow-y-auto">
+              {filtered.map(n => (
+                <div
+                  key={n.id}
+                  onClick={() => setActiveNoteId(n.id)}
+                  className={`p-3 rounded-2xl cursor-pointer border transition ${n.id === activeNoteId ? 'bg-white dark:bg-slate-800 border-blue-500 shadow-sm' : 'bg-white/60 dark:bg-slate-800/40 border-transparent hover:bg-white'}`}
                 >
-                  <option value="updatedAt">Mới cập nhật</option>
-                  <option value="createdAt">Mới tạo</option>
-                  <option value="title">Tên A-Z</option>
-                </select>
-              </div>
-
-              {/* Note Cards */}
-              <div className="flex-1 overflow-y-auto p-2 space-y-2">
-                {filteredNotes.length === 0 ? (
-                  <div className="p-8 text-center text-slate-400">
-                    <p className="font-semibold text-sm mb-1">{t.noNotes}</p>
-                    <p className="text-xs leading-relaxed">{t.noNotesDesc}</p>
-                  </div>
-                ) : (
-                  filteredNotes.map(note => {
-                    const isSelected = note.id === activeNoteId;
-                    const plainText = note.content ? note.content.replace(/<[^>]+>/g, '') : '';
-                    const dateStr = new Date(note.updatedAt).toLocaleDateString(settings.language === 'vi' ? 'vi-VN' : 'en-US', {
-                      month: 'short',
-                      day: 'numeric'
-                    });
-
-                    return (
-                      <div
-                        key={note.id}
-                        onClick={() => setActiveNoteId(note.id)}
-                        className={`p-3 rounded-2xl cursor-pointer transition border relative group ${isSelected ? 'bg-white dark:bg-slate-800 border-brand-500 shadow-sm' : 'bg-white/60 dark:bg-slate-800/40 border-transparent hover:bg-white dark:hover:bg-slate-800'}`}
-                      >
-                        <div className="flex items-start justify-between gap-2 mb-1">
-                          <h3 className="font-semibold text-sm text-slate-800 dark:text-slate-100 truncate flex-1">
-                            {note.emoji} {note.title || 'Ghi chú không tên'}
-                          </h3>
-                          <div className="flex items-center gap-1 shrink-0">
-                            {note.isPinned && <Icon name="pin" className="w-3.5 h-3.5 text-brand-500" />}
-                            {note.isFavorite && <Icon name="star" className="w-3.5 h-3.5 text-amber-400" />}
-                            {note.isLocked && <Icon name="lock" className="w-3.5 h-3.5 text-slate-400" />}
-                          </div>
-                        </div>
-
-                        <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-2 leading-relaxed">
-                          {note.isLocked && !unlockedNotes[note.id] ? '🔒 [Nội dung đã mã hóa]' : (plainText || 'Nội dung trống')}
-                        </p>
-
-                        <div className="flex items-center justify-between text-[10px] text-slate-400">
-                          <span>{dateStr}</span>
-                          <div className="flex items-center gap-2">
-                            {note.folderId && (
-                              <span className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
-                                {folders.find(f => f.id === note.folderId)?.name}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
+                  <h3 className="font-semibold text-sm truncate">{n.emoji} {n.title || 'Ghi chú'}</h3>
+                  <p className="text-xs text-slate-500 line-clamp-2 mt-1">{n.content.replace(/<[^>]+>/g, '') || 'Nội dung trống'}</p>
+                </div>
+              ))}
             </div>
 
-            {/* EDITOR MAIN AREA */}
-            <main className="flex-1 bg-white dark:bg-slate-900 flex flex-col min-w-0 overflow-hidden">
+            <main className="flex-1 bg-white dark:bg-slate-900 flex flex-col p-6 overflow-y-auto">
               {activeNote ? (
-                <EditorPane
-                  note={activeNote}
-                  folders={folders}
-                  categories={categories}
-                  tags={tags}
-                  settings={settings}
-                  t={t}
-                  unlockedNotes={unlockedNotes}
-                  onSave={handleSaveNote}
-                  onDelete={handleDeleteNote}
-                  onRestore={handleRestoreNote}
-                  onPermanentDelete={handlePermanentDelete}
-                  onTogglePin={handleTogglePin}
-                  onToggleFavorite={handleToggleFavorite}
-                  onRequestUnlock={(id) => {
-                    setPasswordModalNoteId(id);
-                    setShowPasswordModal(true);
-                  }}
-                  onRequestExport={() => setShowExportModal(true)}
-                  showToast={showToast}
-                />
+                <div className="max-w-3xl w-full mx-auto space-y-4">
+                  <div className="flex items-center justify-between">
+                    <input
+                      type="text"
+                      value={activeNote.title || ''}
+                      onChange={(e) => handleSave({ ...activeNote, title: e.target.value })}
+                      placeholder={t.noteTitlePlaceholder}
+                      className="text-2xl font-bold bg-transparent outline-none w-full"
+                    />
+                    <button onClick={() => handleDelete(activeNote.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-xl">
+                      <Icon name="trash" />
+                    </button>
+                  </div>
+                  <div
+                    contentEditable
+                    suppressContentEditableWarning
+                    onBlur={(e) => handleSave({ ...activeNote, content: e.target.innerHTML })}
+                    dangerouslySetInnerHTML={{ __html: activeNote.content || '' }}
+                    className="min-h-[400px] outline-none editor-content text-slate-700 dark:text-slate-200"
+                  />
+                </div>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-400">
-                  <span className="text-5xl mb-4">📝</span>
-                  <p className="text-base font-semibold mb-1">{t.noNotes}</p>
-                  <p className="text-xs max-w-sm text-slate-400 leading-relaxed mb-6">{t.noNotesDesc}</p>
-                  <button
-                    onClick={handleCreateNewNote}
-                    className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition"
-                  >
-                    {t.newNote}
-                  </button>
+                <div className="m-auto text-center text-slate-400">
+                  <p className="font-semibold">{t.noNotes}</p>
                 </div>
               )}
             </main>
           </div>
 
-          {/* MODALS */}
-          {showSettingsModal && (
-            <SettingsModal
-              settings={settings}
-              t={t}
-              onClose={() => setShowSettingsModal(false)}
-              onSave={async (newS) => {
-                await db.saveSettings(newS);
-                setSettings(newS);
-                setShowSettingsModal(false);
-                showToast('Đã lưu cài đặt!');
-              }}
-            />
-          )}
-
-          {showBackupModal && (
-            <BackupModal
-              t={t}
-              onClose={() => setShowBackupModal(false)}
-              showToast={showToast}
-              onReloadData={async () => {
-                const loadedNotes = await db.getNotes();
-                setNotes(loadedNotes);
-              }}
-            />
-          )}
-
-          {showExportModal && activeNote && (
-            <ExportModal
-              note={activeNote}
-              t={t}
-              onClose={() => setShowExportModal(false)}
-            />
-          )}
-
-          {showPasswordModal && passwordModalNoteId && (
-            <PasswordModal
-              noteId={passwordModalNoteId}
-              note={notes.find(n => n.id === passwordModalNoteId)}
-              t={t}
-              onClose={() => {
-                setShowPasswordModal(false);
-                setPasswordModalNoteId(null);
-              }}
-              onSuccess={(decryptedContent) => {
-                setUnlockedNotes(prev => ({ ...prev, [passwordModalNoteId]: decryptedContent }));
-                setShowPasswordModal(false);
-                setPasswordModalNoteId(null);
-                showToast(t.toastUnlocked);
-              }}
-            />
-          )}
-
-          <Toast message={toastMsg} onClose={() => setToastMsg('')} />
+          <CookieModal lang={lang} />
+          <ExportModal isOpen={showExport} onClose={() => setShowExport(false)} note={activeNote} allNotes={notes} folders={folders} />
+          <ImportModal isOpen={showImport} onClose={() => setShowImport(false)} onImport={(n) => { handleSave(n); setNotes(p => [n, ...p]); }} />
         </div>
       );
     }
 
-    // ==========================================
-    // 7. EDITOR PANE COMPONENT
-    // ==========================================
-    function EditorPane({
-      note,
-      folders,
-      categories,
-      tags,
-      settings,
-      t,
-      unlockedNotes,
-      onSave,
-      onDelete,
-      onRestore,
-      onPermanentDelete,
-      onTogglePin,
-      onToggleFavorite,
-      onRequestUnlock,
-      onRequestExport,
-      showToast
-    }) {
-      const [title, setTitle] = useState(note.title || '');
-      const [content, setContent] = useState(note.content || '');
-      const [mode, setMode] = useState(note.mode || 'wysiwyg');
-      const [isSaving, setIsSaving] = useState(false);
-      const contentEditableRef = useRef(null);
-
-      // Lock status check
-      const isLocked = note.isLocked && !unlockedNotes[note.id];
-
-      useEffect(() => {
-        setTitle(note.title || '');
-        setContent(note.content || '');
-        setMode(note.mode || 'wysiwyg');
-        if (contentEditableRef.current && !isLocked) {
-          contentEditableRef.current.innerHTML = note.content || '';
-        }
-      }, [note.id, note.isLocked]);
-
-      // Autosave logic
-      useEffect(() => {
-        if (!settings.autoSave || isLocked) return;
-        const timer = setTimeout(() => {
-          if (title !== note.title || content !== note.content || mode !== note.mode) {
-            setIsSaving(true);
-            onSave({ ...note, title, content, mode }).then(() => setIsSaving(false));
-          }
-        }, settings.autoSaveDelay || 1000);
-        return () => clearTimeout(timer);
-      }, [title, content, mode]);
-
-      // Format commands
-      const execCommand = (cmd, value = null) => {
-        document.execCommand(cmd, false, value);
-        if (contentEditableRef.current) {
-          setContent(contentEditableRef.current.innerHTML);
-        }
-      };
-
-      // Word & character stats
-      const plainText = content ? content.replace(/<[^>]+>/g, '') : '';
-      const wordCount = plainText.trim() ? plainText.trim().split(/\s+/).length : 0;
-      const charCount = plainText.length;
-      const readTime = Math.ceil(wordCount / 200);
-
-      if (isLocked) {
-        return (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-slate-50 dark:bg-slate-900">
-            <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-950/40 text-amber-600 flex items-center justify-center mb-4">
-              <Icon name="lock" className="w-8 h-8" />
-            </div>
-            <h2 className="text-xl font-bold mb-2 text-slate-800 dark:text-slate-100">Ghi chú đã mã hóa</h2>
-            <p className="text-sm text-slate-500 max-w-sm mb-6">Ghi chú này đã được khóa bằng mật khẩu AES-256. Nhập mật khẩu để giải mã nội dung.</p>
-            <button
-              onClick={() => onRequestUnlock(note.id)}
-              className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-2.5 rounded-xl font-medium shadow-md transition"
-            >
-              Mở khóa ghi chú
-            </button>
-          </div>
-        );
-      }
-
-      return (
-        <div className="flex-1 flex flex-col h-full overflow-hidden">
-          {/* EDITOR TOOLBAR HEADER */}
-          <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-900">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => onTogglePin(note.id)}
-                className={`p-2 rounded-xl border transition ${note.isPinned ? 'bg-brand-50 border-brand-200 text-brand-600 dark:bg-brand-950/40' : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-600'}`}
-                title={t.pin}
-              >
-                <Icon name="pin" className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => onToggleFavorite(note.id)}
-                className={`p-2 rounded-xl border transition ${note.isFavorite ? 'bg-amber-50 border-amber-200 text-amber-500 dark:bg-amber-950/40' : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-600'}`}
-                title={t.favorite}
-              >
-                <Icon name="star" className="w-4 h-4" />
-              </button>
-
-              {/* Folder Selector */}
-              <select
-                value={note.folderId || ''}
-                onChange={(e) => onSave({ ...note, folderId: e.target.value })}
-                className="bg-slate-100 dark:bg-slate-800 border-0 rounded-xl px-3 py-1.5 text-xs text-slate-700 dark:text-slate-300 font-medium cursor-pointer"
-              >
-                <option value="">-- Không chọn thư mục --</option>
-                {folders.map(f => (
-                  <option key={f.id} value={f.id}>{f.name}</option>
-                ))}
-              </select>
-            </div>
-
-            {/* Mode Switcher & Right Actions */}
-            <div className="flex items-center gap-2">
-              <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl text-xs font-semibold">
-                <button
-                  onClick={() => setMode('wysiwyg')}
-                  className={`px-3 py-1 rounded-lg transition ${mode === 'wysiwyg' ? 'bg-white dark:bg-slate-700 shadow-xs text-slate-800 dark:text-slate-100' : 'text-slate-500'}`}
-                >
-                  {t.wysiwyg}
-                </button>
-                <button
-                  onClick={() => setMode('markdown')}
-                  className={`px-3 py-1 rounded-lg transition ${mode === 'markdown' ? 'bg-white dark:bg-slate-700 shadow-xs text-slate-800 dark:text-slate-100' : 'text-slate-500'}`}
-                >
-                  {t.markdown}
-                </button>
-              </div>
-
-              <button
-                onClick={onRequestExport}
-                className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-                title={t.export}
-              >
-                <Icon name="download" className="w-4 h-4" />
-              </button>
-
-              {note.isTrashed ? (
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => onRestore(note.id)}
-                    className="flex items-center gap-1 bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium"
-                  >
-                    <Icon name="refresh" className="w-3.5 h-3.5" />
-                    <span>{t.restore}</span>
-                  </button>
-                  <button
-                    onClick={() => onPermanentDelete(note.id)}
-                    className="flex items-center gap-1 bg-red-600 text-white px-3 py-1.5 rounded-xl text-xs font-medium"
-                  >
-                    <Icon name="trash" className="w-3.5 h-3.5" />
-                    <span>{t.deletePermanent}</span>
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => onDelete(note.id)}
-                  className="p-2 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition"
-                  title={t.delete}
-                >
-                  <Icon name="trash" className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* FORMATTING TOOLBAR */}
-          {mode === 'wysiwyg' && !note.isTrashed && (
-            <div className="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex flex-wrap items-center gap-1 text-slate-600 dark:text-slate-300">
-              <button onClick={() => execCommand('bold')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg" title="In đậm"><Icon name="bold" className="w-4 h-4" /></button>
-              <button onClick={() => execCommand('italic')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg" title="In nghiêng"><Icon name="italic" className="w-4 h-4" /></button>
-              <button onClick={() => execCommand('underline')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg font-underline"><u>U</u></button>
-              <div className="w-px h-4 bg-slate-300 dark:bg-slate-700 mx-1" />
-              <button onClick={() => execCommand('insertUnorderedList')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg"><Icon name="list" className="w-4 h-4" /></button>
-              <button onClick={() => execCommand('formatBlock', 'blockquote')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg"><Icon name="quote" className="w-4 h-4" /></button>
-              <button onClick={() => execCommand('formatBlock', 'pre')} className="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg"><Icon name="code" className="w-4 h-4" /></button>
-            </div>
-          )}
-
-          {/* TITLE & CONTENT INPUT */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            <input
-              type="text"
-              placeholder={t.noteTitlePlaceholder}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              disabled={note.isTrashed}
-              className="w-full text-2xl font-bold bg-transparent border-0 focus:ring-0 text-slate-800 dark:text-slate-100 placeholder-slate-300 dark:placeholder-slate-600"
-            />
-
-            {mode === 'wysiwyg' ? (
-              <div
-                ref={contentEditableRef}
-                contentEditable={!note.isTrashed}
-                onInput={(e) => setContent(e.currentTarget.innerHTML)}
-                className="editor-content min-h-[300px] text-base text-slate-700 dark:text-slate-200 leading-relaxed outline-none"
-              />
-            ) : (
-              <textarea
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                disabled={note.isTrashed}
-                placeholder="Nhập nội dung Markdown tại đây..."
-                className="w-full h-80 bg-transparent border-0 font-mono text-sm focus:ring-0 text-slate-800 dark:text-slate-100 resize-none leading-relaxed"
-              />
-            )}
-          </div>
-
-          {/* FOOTER STATS */}
-          <div className="px-4 py-2 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 flex items-center justify-between text-xs text-slate-400">
-            <div className="flex items-center gap-3">
-              <span>{wordCount} {t.wordCount}</span>
-              <span>•</span>
-              <span>{charCount} {t.charCount}</span>
-              <span>•</span>
-              <span>{readTime} {t.readTime}</span>
-            </div>
-            <span>{isSaving ? t.saving : t.saved}</span>
-          </div>
-        </div>
-      );
-    }
-
-    // ==========================================
-    // 8. SETTINGS MODAL
-    // ==========================================
-    function SettingsModal({ settings, t, onClose, onSave }) {
-      const [form, setForm] = useState({ ...settings });
-
-      return (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t.settings}</h3>
-              <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><Icon name="x" /></button>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold uppercase text-slate-400 mb-1">{t.theme}</label>
-                <select
-                  value={form.theme}
-                  onChange={(e) => setForm({ ...form, theme: e.target.value })}
-                  className="w-full bg-slate-100 dark:bg-slate-700 border-0 rounded-xl p-2.5 text-sm text-slate-800 dark:text-slate-100 font-medium"
-                >
-                  <option value="system">{t.system}</option>
-                  <option value="light">{t.light}</option>
-                  <option value="dark">{t.dark}</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase text-slate-400 mb-1">{t.language}</label>
-                <select
-                  value={form.language}
-                  onChange={(e) => setForm({ ...form, language: e.target.value })}
-                  className="w-full bg-slate-100 dark:bg-slate-700 border-0 rounded-xl p-2.5 text-sm text-slate-800 dark:text-slate-100 font-medium"
-                >
-                  <option value="vi">Tiếng Việt</option>
-                  <option value="en">English</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-2 pt-2">
-              <button onClick={onClose} className="px-4 py-2 rounded-xl text-sm font-medium text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">{t.cancel}</button>
-              <button onClick={() => onSave(form)} className="px-4 py-2 rounded-xl text-sm font-medium bg-brand-600 text-white hover:bg-brand-700 shadow-sm">{t.save}</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // ==========================================
-    // 9. BACKUP & RESTORE MODAL
-    // ==========================================
-    function BackupModal({ t, onClose, showToast, onReloadData }) {
-      const handleDownloadBackup = async () => {
-        const notes = await db.getNotes();
-        const folders = await db.getFolders();
-        const categories = await db.getCategories();
-        const tags = await db.getTags();
-
-        const backupData = {
-          version: '1.0',
-          exportedAt: new Date().toISOString(),
-          data: { notes, folders, categories, tags }
-        };
-
-        const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `notebook-backup-${new Date().toISOString().slice(0, 10)}.json`;
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast('Đã tải xuống file sao lưu!');
-      };
-
-      const handleRestoreBackup = (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = async (event) => {
-          try {
-            const parsed = JSON.parse(event.target.result);
-            if (parsed.data && parsed.data.notes) {
-              for (const n of parsed.data.notes) await db.saveNote(n);
-              if (parsed.data.folders) for (const f of parsed.data.folders) await db.saveFolder(f);
-              if (parsed.data.categories) for (const c of parsed.data.categories) await db.saveCategory(c);
-              if (parsed.data.tags) for (const tg of parsed.data.tags) await db.saveTag(tg);
-
-              await onReloadData();
-              showToast(t.toastBackupRestored);
-              onClose();
-            }
-          } catch (err) {
-            alert('File sao lưu không hợp lệ!');
-          }
-        };
-        reader.readAsText(file);
-      };
-
-      return (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t.backup}</h3>
-              <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><Icon name="x" /></button>
-            </div>
-
-            <div className="space-y-4">
-              <button
-                onClick={handleDownloadBackup}
-                className="w-full flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white p-3 rounded-xl font-medium shadow-sm transition text-sm"
-              >
-                <Icon name="download" className="w-4 h-4" />
-                <span>{t.downloadBackup}</span>
-              </button>
-
-              <label className="w-full flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 p-3 rounded-xl font-medium transition text-sm cursor-pointer border border-dashed border-slate-300 dark:border-slate-600">
-                <Icon name="upload" className="w-4 h-4" />
-                <span>{t.restoreBackup}</span>
-                <input type="file" accept=".json" onChange={handleRestoreBackup} className="hidden" />
-              </label>
-            </div>
-
-            <div className="flex justify-end pt-2">
-              <button onClick={onClose} className="px-4 py-2 rounded-xl text-sm font-medium text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">{t.close}</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // ==========================================
-    // 10. EXPORT MODAL
-    // ==========================================
-    function ExportModal({ note, t, onClose }) {
-      const handleExport = (format) => {
-        let content = '';
-        let mimeType = 'text/plain';
-        let ext = 'txt';
-
-        if (format === 'md') {
-          content = `# ${note.title}\n\n${note.content ? note.content.replace(/<p>/g, '').replace(/<\/p>/g, '\n\n').replace(/<br\s*\/?>/g, '\n') : ''}`;
-          mimeType = 'text/markdown';
-          ext = 'md';
-        } else if (format === 'html') {
-          content = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${note.title}</title></head><body><h1>${note.title}</h1>${note.content}</body></html>`;
-          mimeType = 'text/html';
-          ext = 'html';
-        } else {
-          content = `${note.title}\n\n${note.content ? note.content.replace(/<[^>]+>/g, '') : ''}`;
-        }
-
-        const blob = new Blob([content], { type: mimeType });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${note.title || 'note'}.${ext}`;
-        a.click();
-        URL.revokeObjectURL(url);
-        onClose();
-      };
-
-      return (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t.exportFormat}</h3>
-              <button onClick={onClose} className="text-slate-400 hover:text-slate-600"><Icon name="x" /></button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-2">
-              <button onClick={() => handleExport('md')} className="p-3 rounded-xl bg-slate-100 dark:bg-slate-700 text-left font-semibold text-sm hover:bg-brand-50 hover:text-brand-600 transition">Markdown (.md)</button>
-              <button onClick={() => handleExport('html')} className="p-3 rounded-xl bg-slate-100 dark:bg-slate-700 text-left font-semibold text-sm hover:bg-brand-50 hover:text-brand-600 transition">HTML (.html)</button>
-              <button onClick={() => handleExport('txt')} className="p-3 rounded-xl bg-slate-100 dark:bg-slate-700 text-left font-semibold text-sm hover:bg-brand-50 hover:text-brand-600 transition">Plain Text (.txt)</button>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    // ==========================================
-    // 11. PASSWORD UNLOCK MODAL
-    // ==========================================
-    function PasswordModal({ noteId, note, t, onClose, onSuccess }) {
-      const [password, setPassword] = useState('');
-      const [error, setError] = useState(false);
-
-      const handleUnlock = (e) => {
-        e.preventDefault();
-        const decrypted = decryptText(note.content, password);
-        if (decrypted !== null) {
-          onSuccess(decrypted);
-        } else {
-          setError(true);
-        }
-      };
-
-      return (
-        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <form onSubmit={handleUnlock} className="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
-            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t.passwordPrompt}</h3>
-            <input
-              type="password"
-              placeholder="Mật khẩu..."
-              value={password}
-              onChange={(e) => { setPassword(e.target.value); setError(false); }}
-              className="w-full bg-slate-100 dark:bg-slate-700 border-0 rounded-xl p-3 text-sm text-slate-800 dark:text-slate-100"
-              autoFocus
-            />
-            {error && <p className="text-xs text-red-500 font-medium">{t.passwordMismatch}</p>}
-            <div className="flex justify-end gap-2 pt-2">
-              <button type="button" onClick={onClose} className="px-4 py-2 rounded-xl text-sm font-medium text-slate-500">{t.cancel}</button>
-              <button type="submit" className="px-4 py-2 rounded-xl text-sm font-medium bg-brand-600 text-white">{t.confirm}</button>
-            </div>
-          </form>
-        </div>
-      );
-    }
-
-    // Mount App
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
   </script>
 </body>
 </html>

@@ -1,0 +1,159 @@
+::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.4); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(107, 114, 128, 0.6); }
+    .editor-content [contenteditable="true"]:focus { outline: none; }
+    .editor-content blockquote { border-left: 4px solid #3b82f6; padding-left: 1rem; font-style: italic; color: #4b5563; margin: 0.75rem 0; }
+    .dark .editor-content blockquote { color: #9ca3af; }
+    .editor-content pre { background-color: #1e293b; color: #f8fafc; padding: 0.75rem 1rem; border-radius: 0.5rem; font-family: 'Fira Code', monospace; font-size: 0.875rem; overflow-x: auto; margin: 0.75rem 0; }
+    .editor-content ul { list-style-type: disc; padding-left: 1.5rem; margin: 0.5rem 0; }
+    .editor-content ol { list-style-type: decimal; padding-left: 1.5rem; margin: 0.5rem 0; }
+    
+    .page-format-standard {
+      background-color: transparent;
+    }
+    .page-format-lined {
+      background-color: #fcfdfd;
+      background-image: repeating-linear-gradient(transparent, transparent 31px, #e2e8f0 31px, #e2e8f0 32px);
+      background-position: 0 10px;
+      line-height: 32px;
+      border-left: 4px solid #f87171 !important;
+      padding-left: 2rem !important;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .dark .page-format-lined {
+      background-color: #0f172a;
+      background-image: repeating-linear-gradient(transparent, transparent 31px, #1e293b 31px, #1e293b 32px);
+      border-left-color: #ef4444 !important;
+    }
+    .page-format-grid {
+      background-color: #ffffff;
+      background-size: 24px 24px;
+      background-image: linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+      border: 1px solid #cbd5e1;
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    .dark .page-format-grid {
+      background-color: #0f172a;
+      background-image: linear-gradient(to right, rgba(51, 65, 85, 0.5) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(51, 65, 85, 0.5) 1px, transparent 1px);
+      border-color: #334155;
+    }
+    .page-format-code {
+      font-family: 'Fira Code', monospace !important;
+      background-color: #0f172a !important;
+      color: #38bdf8 !important;
+      border: 1px solid #1e293b;
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .page-format-code input, .page-format-code .editor-content, .page-format-code select {
+      font-family: 'Fira Code', monospace !important;
+      color: #38bdf8 !important;
+    }
+    .page-format-reader {
+      font-family: Georgia, Cambria, "Times New Roman", Times, serif !important;
+      background-color: #fdfbf7 !important;
+      color: #292524 !important;
+      line-height: 1.85 !important;
+      font-size: 1.1rem !important;
+      max-width: 48rem !important;
+      border: 1px solid #e7e5e4;
+      border-radius: 1.25rem;
+      padding: 2rem !important;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+      margin: 0 auto;
+    }
+    .dark .page-format-reader {
+      background-color: #1c1917 !important;
+      color: #e7e5e4 !important;
+      border-color: #292524;
+    }
+    .page-format-reader input, .page-format-reader select {
+      font-family: Georgia, Cambria, serif !important;
+      color: inherit !important;
+    }
+
+@keyframes nb-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nb-scale-in {
+  from { opacity: 0; transform: scale(.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes nb-slide-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes nb-pop {
+  0% { transform: scale(.96); }
+  70% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+#root > div { animation: nb-fade-up .35s ease both; }
+#root header { animation: nb-slide-in .3s ease both; }
+#root aside { animation: nb-slide-in .38s ease both; }
+#root aside button { transition: transform .2s ease, background-color .2s ease, color .2s ease; }
+#root aside button:hover { transform: translateX(2px); }
+#root main { animation: nb-fade-up .4s ease both; }
+#root main > div { animation: nb-scale-in .3s ease both; }
+#root main button, #root header button, #root select, #root input, #root textarea {
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease, color .18s ease;
+}
+#root main button:hover, #root header button:hover { transform: translateY(-1px); }
+#root main button:active, #root header button:active { transform: scale(.97); }
+#root input:focus, #root textarea:focus, #root select:focus {
+  box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+}
+#root .space-y-2 > div { animation: nb-fade-up .28s ease both; }
+#root .space-y-2 > div:nth-child(2) { animation-delay: .03s; }
+#root .space-y-2 > div:nth-child(3) { animation-delay: .06s; }
+#root .space-y-2 > div:nth-child(4) { animation-delay: .09s; }
+#root .space-y-2 > div:nth-child(5) { animation-delay: .12s; }
+@media (prefers-reduced-motion: reduce) {
+  #root *, #root *::before, #root *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+.notebook-footer {
+  animation: footerRise .5s ease both;
+}
+
+.cookie-banner {
+  animation: cookieSlideUp .45s cubic-bezier(.22,1,.36,1) both;
+}
+
+.cookie-banner > div {
+  animation: cookieGlow 2.8s ease-in-out infinite;
+}
+
+@keyframes footerRise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cookieSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cookieGlow {
+  0%, 100% { box-shadow: 0 20px 45px rgba(15, 23, 42, .12); }
+  50% { box-shadow: 0 24px 55px rgba(37, 99, 235, .18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notebook-footer,
+  .cookie-banner,
+  .cookie-banner > div {
+    animation: none;
+  }
+}
